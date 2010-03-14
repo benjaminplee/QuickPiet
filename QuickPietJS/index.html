@@ -1,16 +1,44 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
-   "http://www.w3.org/TR/html4/strict.dtd">
-
+"http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<title>QuickPietJS</title>
-	<meta name="generator" content="TextMate http://macromates.com/">
-	<meta name="author" content="Benjamin P Lee - leebenjp">
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" type="text/javascript" charset="utf-8"></script>
-	<script src="quickpiet.js" type="text/javascript" charset="utf-8"></script>
-</head>
-<body>
-
-</body>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>
+			QuickPietJS
+		</title>
+		<meta name="generator" content="TextMate http://macromates.com/" />
+		<meta name="author" content="Benjamin P Lee - leebenjp" />
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="quickpiet.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<div style="float:left;">
+			Commands:
+			<br />
+			<textarea id="commands" cols="40" rows="40" ></textarea>
+		</div>
+		<div style="float:left;">
+			Input:
+			<br />
+			<textarea id="input" cols="40" rows="40" ></textarea>
+		</div>
+		<div style="float:left;">
+			Output:
+			<br />
+			<textarea id="output" cols="40" rows="40" ></textarea>
+		</div>
+		<div style="float:left;">
+			Stack:
+			<br />
+			<textarea id="stack" cols="10" rows="40" ></textarea>
+		</div>
+		<div style="float:left;">
+			<input type="button" value="Run" id="run" />
+		</div>
+		<div style="float:left;">
+			Log:
+			<br />
+			<textarea id="log" cols="80" rows="10" ></textarea>
+		</div>
+	</body>
 </html>
