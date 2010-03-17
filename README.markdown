@@ -4,5 +4,7 @@ This repository contains the QuickPiet language spec along with utilities and pr
 [QuickPiet home page](http://benjaminplee.github.com/QuickPiet)
 
 [Original QuickPiet language spec](http://gist.github.com/332040)
+
 [Piet home](http://www.dangermouse.net/esoteric/piet.html)
+
 [QuickPiet articles on TwoGuysArguing](http://twoguysarguing.wordpress.com/tag/quickpiet/)
