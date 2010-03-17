@@ -1,0 +1,68 @@
+# QuickPiet commands listed below with their effect/explanation to the right after the arrow (-->)
+
+# These commands follow the actions available with the Piet programming languages with some 
+# small changes to allow algorithms to be tested without the need of creating valid Piet images.
+# Original Piet information can be found at http://www.dangermouse.net/esoteric/piet.html
+
+# Just as in Piet, this language spec assumes a single "infinite" stack and a linear command execution order.
+
+# Blank lines should be ignored.
+# An implicit "end" command is present at the bottom of the document.
+# Improperly formatted or typed commands should be ignored, allowing for future commands to be added.
+
+push X Y Z ...     --> Pushes 1 or more space separated positive integer values onto the stack (X first, then Y, then Z and so on).
+                   --> Positive integer values may represent ASCII character codes or plain integers
+                   --> Do not include commas (,) in large values
+
+pop X              --> Pops the top X value(s) of the stack and discards.  If X is omitted, 1 is assumed.
+
+duplicate          --> Pushes a copy of the top value of the stack onto the stack
+
+roll               --> Pops the top two values, and "rolls" the remaining stack entries to a depth equal to the second value popped
+                   --> By a number of rolls equal to the first value popped
+                   --> A single roll to depth n is defined as burying the top value on the stack n deep
+                   --> And bringing all values above it up by 1 place
+                   --> A negative number of rolls rolls in the opposite direction
+                   --> Rolling the stack [1,2,3,4,5] 2 rolls to a depth of 3 results in [1,2,5,3,4]
+                   --> Another roll of value 2, with depth 3, results in [1,2,4,5,3]
+
+in                 --> Read a single value from STDIN and push it onto the stack; characters are read as their ASCII value
+
+out                --> Pop the top value from the stack and output it to STDOUT in it's ASCII character value
+
+add                --> Pops the top two values, adds them, and pushes the result
+
+subtract           --> Pops the top two values, subtracts the top value from the second top value, and pushes the result
+
+multiply           --> Pops the top two values, multiplies them, and pushes the result
+
+divide             --> Pops the top two values, integer divides the second top value by the top value, and pushes the result
+
+mod                --> Pops the top two values, calculates the second top value modulo the top value, and pushes the result
+
+not                --> Replaces the top value of the stack with 0 if it is non-zero, and 1 if it is zero
+
+greater            --> Pops the top two values
+                   --> Pushes 1 on to the stack if the second top value is greater than the top value, 0 otherwise
+
+end                --> Stop program execution, values left on the stack are discarded
+
+# LINE COMMENT     --> Line comment must begin wit a # and may contains zero or more characters of any type
+
+:label             --> Line label must begin with a ":" character and one or more alpha-numeric characters (no whitespace)
+
+goto label label   --> Pops the top value from the stack
+                   --> Label names should not include the ":" symbol
+                   --> If the value modded by 4 is equal to 1, program execution switches to the first label (e.g. 1, 5, etc)
+                   --> If the value modded by 4 equals 3, program execution switches to the second label (e.g. 3, 7, etc)
+                   --> If the value modded by 4 equals 0 or 2, execution continues to the next command
+                   --> Negative values go in the opposite "direction".  -1 = 3, -2 = 0, -3 = 1, -4 = 0
+                   --> If either label is not to be used, replace with a single ":" symbol
+
+assert X Y Z ...   --> Pops all values from the stack, checking that each equals the given value in order
+                   --> Right most value is "top" of stack: Z = top of stack, Y second top, X third top
+                   --> If any value is not equal to the value on the stack, execution stops and error message is presented to STDOUT
+                   --> If there are different numbers of stack elements, execution stops and error message is presented to STDOUT
+                   --> This may be used in testing
+                   --> This could be created through a series of smaller commands, 
+                   --> But is included as a convenience to test the current state of the stack
