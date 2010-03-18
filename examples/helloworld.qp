@@ -1,0 +1,31 @@
+# Simple Hello World
+# Pushes each character's ASCII code onto the stack and immediately outputs it to STDOUT
+
+push 72
+out
+push 101
+out
+push 108
+out
+push 108
+out
+push 111
+out
+push 32
+out
+push 119
+out
+push 111
+out
+push 114
+out
+push 108
+out
+push 100
+out
+push 33
+out
+push 13
+out
+push 10
+out

@@ -1,0 +1,60 @@
+# Rock Paper Scissors
+# Simple two player game based on Nate Young's original challenge: http://twoguysarguing.wordpress.com/2009/12/09/rock-paper-scissors/
+
+# **** Player 1 Name: ****
+push 80
+out
+push 108
+out
+push 97
+out
+push 121
+out
+push 101
+out
+push 114
+out
+push 32
+out
+push 49
+out
+push 32
+out
+push 78
+out
+push 97
+out
+push 109
+out
+push 101
+out
+push 58
+out
+push 32
+out
+
+# **** Input Player 1 Name ****
+:inputPlayer1NameCharacter
+in
+duplicate
+push 13
+subtract
+not
+not
+goto inputPlayer1NameCharacter NA
+
+
+
+# DO MORE STUFF!
+
+
+
+# Flush STDOUT buffer so that the output is easier to read
+push 13
+out
+push 10
+out
+push 13
+out
+push 10
+out
