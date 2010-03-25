@@ -76,11 +76,13 @@ Commands = {
 		}
 	},
 	
-	input : function(stack, args, STDIN, STDOUT) {
+	// Done as a string b/c of issue in Chrome
+	'in' : function(stack, args, STDIN, STDOUT) {
 		stack.push(STDIN.pop().charCodeAt(0))
 	},
 	
-	output : function(stack, args, STDIN, STDOUT) {
+	// Done as a string b/c of issue in Chrome
+	'out' : function(stack, args, STDIN, STDOUT) {
 		this._enforce_non_empty_stack(stack)
 		
 		var numeric_value = stack.pop()
