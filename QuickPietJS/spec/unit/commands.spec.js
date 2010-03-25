@@ -53,4 +53,44 @@ describe 'Commands'
 			-{ Commands.push(stack, 'dog') }.should.throw_error SyntaxError, 'Invalid PUSH argument(s)'
 		end
 	end
+	
+	describe 'pop'
+		it 'should discard top value on stack'
+			stack.push(4)
+			
+			stack.should.eql [4]
+			
+			Commands.pop(stack)
+			
+			stack.should.eql []
+		end
+		
+		it 'should discard top X values from stack if positive integer is given'
+			stack.push(1)
+			stack.push(2)
+			stack.push(3)
+			
+			Commands.pop(stack, '2')
+			
+			stack.should.eql [1]
+		end
+		
+		it 'should error if argument is not a single positive numeric value'
+			stack.push(10)
+			
+			-{ Commands.pop(stack, 'a') }.should.throw_error SyntaxError, 'Invalid POP argument'
+			-{ Commands.pop(stack, '5.6') }.should.throw_error SyntaxError, 'Invalid POP argument'
+			-{ Commands.pop(stack, '-1') }.should.throw_error SyntaxError, 'Invalid POP argument'
+		end
+		
+		it 'should error if pop is called on an empty stack'
+			-{ Commands.pop(stack)}.should.throw_error SyntaxError, 'Invalid POP on empty stack'
+		end
+		
+		it 'should return undefined'
+			stack.push(100)
+		
+			Commands.pop(stack).should.eql undefined
+		end
+	end
 end
