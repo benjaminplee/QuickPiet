@@ -6,19 +6,19 @@ describe 'Commands'
 	end
 
 	describe 'push'
-		it 'should a single integer onto an empty stack'
+		it 'should push a single integer onto an empty stack'
 			Commands.push(stack, '14')
 			
 			stack.should.eql [14]
 		end
 		
-		it 'should multiple integers onto an empty stack'
+		it 'should push multiple integers onto an empty stack'
 			Commands.push(stack, '100 0 1')
 			
 			stack.should.eql [100, 0, 1]
 		end
 		
-		it 'should multiple integers onto a non-empty stack'
+		it 'should push multiple integers onto a non-empty stack'
 			stack.push(1)
 			stack.push(2)
 			
