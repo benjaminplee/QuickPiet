@@ -241,11 +241,63 @@ describe 'Commands'
 	end
 	
 	describe 'mod'
+	  before_each
+	  	stack.push(10)
+	    stack.push(200)
+	    stack.push(33)
+	  end
 	  
+	  it 'should pop top 2 values and push remainder of their division (second top % top)'
+	    Commands.mod(stack)
+	    
+	    stack.should.eql [10, 2]
+	  end
+	  
+	  it 'should return zero if there is no remainder'
+	  	stack.push(11)
+	  	
+	    Commands.mod(stack)
+	    
+	    stack.should.eql [10, 200, 0]
+	  end
+
+		it 'should error if the stack is empty'
+		  stack = []
+		  
+		  -{ Commands.mod(stack) }.should.throw_error EvalError, 'Can not MOD from empty stack'
+		end
+
+	  it 'should return undefined'
+	    Commands.mod(stack).should.eql undefined
+	  end
 	end
 	
 	describe 'not'
+	  it 'should replace top value with 0 if top value was non-zero'
+	    stack.push(5)
+	    
+	    Commands.not(stack)
+	    
+	    stack.should.eql [0]
+	  end
 	  
+	  it 'should replace top value with 1 if top value was zero'
+	    stack.push(0)
+	    
+	    Commands.not(stack)
+	    
+	    stack.should.eql [1]
+	  end
+	  
+		it 'should error if the stack is empty'
+		  -{ Commands.not(stack) }.should.throw_error EvalError, 'Can not NOT from empty stack'
+		end
+
+	  it 'should return undefined'
+	  	stack.push(2)
+	  	
+	    Commands.not(stack).should.eql undefined
+	  end
 	end
 	
 	describe 'greater'

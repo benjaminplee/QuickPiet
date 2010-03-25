@@ -67,6 +67,20 @@ Commands = {
 		var second_top = stack.pop()
 		stack.push(parseInt(second_top / top))
 	},
+	
+	mod : function(stack) {
+		this._enforce_non_empty_stack(stack, 'MOD')
+		
+		var top = stack.pop()
+		var second_top = stack.pop()
+		stack.push(parseInt(second_top % top))
+	},
+	
+	not : function(stack) {
+		this._enforce_non_empty_stack(stack, 'NOT')
+		
+		stack.push(stack.pop() == 0 ? 1 : 0)
+	},
 
 	_enforce_non_empty_stack : function(stack, method_name) {
 		if(stack.length == 0) {
