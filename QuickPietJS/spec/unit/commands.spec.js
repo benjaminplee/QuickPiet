@@ -115,16 +115,7 @@ describe 'Commands'
 		it 'should error if stack is empty'
 		  -{ Commands.duplicate(stack) }.should.throw_error EvalError, 'Can not DUPLICATE from empty stack'
 		end
-		
-		it 'should error if arguments are given'
-			stack.push(100)
-			
-		  -{ Commands.duplicate(stack, '') }.should.throw_error SyntaxError, 'DUPLICATE does not take arguments'
-		  -{ Commands.duplicate(stack, ' ') }.should.throw_error SyntaxError, 'DUPLICATE does not take arguments'
-		  -{ Commands.duplicate(stack, 'a') }.should.throw_error SyntaxError, 'DUPLICATE does not take arguments'
-		  -{ Commands.duplicate(stack, '1') }.should.throw_error SyntaxError, 'DUPLICATE does not take arguments'
-		end
-		
+				
 		it 'should return undefined'
 		  stack.push(100)
 		  
@@ -161,11 +152,7 @@ describe 'Commands'
 		  
 		  -{ Commands.add(stack) }.should.throw_error EvalError, 'Can not ADD from empty stack'
 		end
-	  
-	  it 'should error if arguments are given'
-	    -{ Commands.add(stack, '') }.should.throw_error SyntaxError, 'ADD does not take arguments'
-	  end
-	  
+
 	  it 'should return undefined'
 	    Commands.add(stack).should.eql undefined
 	  end

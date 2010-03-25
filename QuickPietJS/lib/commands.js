@@ -34,16 +34,14 @@ Commands = {
 	
 	duplicate : function(stack, args) {
 		this._enforce_non_empty_stack(stack, 'DUPLICATE')
-		this._enforce_no_arguments(args, 'DUPLICATE')
 		
 		var val = stack.pop()
 		stack.push(val)
 		stack.push(val)
 	},
 	
-	add : function(stack, args) {
+	add : function(stack) {
 		this._enforce_non_empty_stack(stack, 'ADD')
-		this._enforce_no_arguments(args, 'ADD')
 		
 		stack.push(stack.pop() + stack.pop())
 	},
@@ -51,12 +49,6 @@ Commands = {
 	_enforce_non_empty_stack : function(stack, method_name) {
 		if(stack.length == 0) {
 			throw new EvalError('Can not ' + method_name + ' from empty stack')
-		}
-	},
-	
-	_enforce_no_arguments : function(args, method_name) {
-		if(args != undefined) {
-			throw new SyntaxError(method_name + ' does not take arguments')
 		}
 	}
 }
