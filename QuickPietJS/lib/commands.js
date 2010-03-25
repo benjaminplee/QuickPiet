@@ -169,6 +169,24 @@ Commands = {
 			return arguments[1]
 		}
 	},
+	
+	assert : function(stack, args) {
+		var check_values = jQuery.trim(args).split(' ')
+		var num_check_values = check_values.length
+		
+		if((!args && stack.length != 0) || (num_check_values != stack.length && args)) {
+			throw new EvalError('Invalid stack: wrong number of values')
+		}
+		
+		for(var index = 0; index < num_check_values && args; index++) {
+			var stack_value = stack.pop()
+			var check_value = parseInt(check_values[index])
+			
+			if(stack_value != check_value) {
+				throw new EvalError('Invalid stack: wrong values')
+			}
+		}
+	},
 
 	_enforce_non_empty_stack : function(stack) {
 		this._enforce_min_stack_size(stack, 1)

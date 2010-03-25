@@ -518,23 +518,48 @@ describe 'Commands'
 	
 	describe 'assert'
 	  it 'should pop all values from the stack, leaving it empty'
+	    stack = [1,2,3,4,5]
 	    
+	    Commands.assert(stack, '5 4 3 2 1')
+	    
+	    stack.should.eql []
 	  end
 	  
 	  it 'should error if there are no arguments and the stack is not empty'
+	    stack.push(1)
 	    
+	    -{ Commands.assert(stack) }.should.throw_error EvalError, 'Invalid stack: wrong number of values'
+	  end
+	  
+	  it 'should do nothing and return undefined if no arguments are given and stack is empty'
+	    Commands.assert(stack).should.be_undefined
+	  end
+	  
+	  it 'should do nothing and return undefined if all arguments match stack values'
+	    stack.push(1)
+	    stack.push(2)
+	    stack.push(3)
+	    
+	    Commands.assert(stack, '3 2 1').should.be_undefined
 	  end
 	  
 	  it 'should error if the number of arguments > stack size'
+	    stack.push(1)
 	    
+	    -{ Commands.assert(stack, '2 1') }.should.throw_error EvalError, 'Invalid stack: wrong number of values'
 	  end
 	  
 	  it 'should error if the top value on the stack was not equal to the first argument'
+	    stack.push(1)
 	    
+	    -{ Commands.assert(stack, '2') }.should.throw_error EvalError, 'Invalid stack: wrong values'	    
 	  end
 	  
 	  it 'should error if any arguments were not on the stack in the correct order (top first)'
+	    stack.push(1)
+	    stack.push(2)
 	    
+	    -{ Commands.assert(stack, '2 3') }.should.throw_error EvalError, 'Invalid stack: wrong values'
 	  end
 	end
 end
