@@ -1,0 +1,47 @@
+# User enters name, program says "Hi ___"
+
+# Prompt
+push X
+out
+push X
+out
+
+# Add stack counter
+push 0
+
+# Input
+:enterName
+in
+duplicate
+push 13
+subtract
+not
+not
+goto enterName NOWHERE
+pop
+
+# Output Hi
+push 
+out
+push
+out
+push
+out
+
+# Output name (backwards)
+:outputName
+duplicate
+push 0
+push 1
+subtract
+subtract
+not
+goto done NOWHERE
+out
+push 1
+goto outputName NOWHERE
+
+:done
+
+
+
