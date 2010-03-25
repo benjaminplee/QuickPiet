@@ -76,6 +76,18 @@ Commands = {
 		}
 	},
 	
+	out : function(stack, args, STDIN, STDOUT) {
+		this._enforce_non_empty_stack(stack)
+		
+		var numeric_value = stack.pop()
+		
+		if(numeric_value < 1) {
+			throw new EvalError('Can not output negative values')
+		}
+		
+		STDOUT.push(String.fromCharCode(numeric_value))
+	},
+	
 	add : function(stack) {
 		this._enforce_min_stack_size(stack, 2)
 		

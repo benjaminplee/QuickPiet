@@ -1,6 +1,8 @@
 describe 'Commands'
 	before_each
 		stack = []
+		STDIN = []
+		STDOUT = []
 	end
 
 	describe 'push'
@@ -26,7 +28,7 @@ describe 'Commands'
 		end
 		
 		it 'should return undefined'
-			Commands.push(stack, '1').should.eql undefined
+			Commands.push(stack, '1').should.be_undefined
 		end
 		
 		it 'should error if missing arguments'
@@ -96,7 +98,7 @@ describe 'Commands'
 		end
 		
 		it 'should return undefined'
-			Commands.pop(stack).should.eql undefined
+			Commands.pop(stack).should.be_undefined
 		end
 	end
 	
@@ -119,7 +121,7 @@ describe 'Commands'
 		it 'should return undefined'
 		  stack.push(100)
 		  
-		  Commands.duplicate(stack).should.eql undefined
+		  Commands.duplicate(stack).should.be_undefined
 		end
 	end
 	
@@ -158,16 +160,46 @@ describe 'Commands'
 		end
 		
 		it 'should return undefined'
-		  Commands.roll(stack, '2 1').should.eql undefined
+		  Commands.roll(stack, '2 1').should.be_undefined
 		end
 	end
 	
 	describe 'in'
-	  
+	  // DO ME!
 	end
 	
 	describe 'out'
-	  
+		it 'should pop the top value from the stack'
+		  stack.push(32)
+		  
+		  Commands.out(stack, '', STDIN, STDOUT)
+		  
+		  stack.should.eql []
+		end
+		
+		it 'should \'push\' the ASCII character associated with the top value onto STDOUT'
+			stack.push(32)
+		  
+		  Commands.out(stack, '', STDIN, STDOUT)
+
+			STDOUT.should.eql [' ']
+		end
+		
+		it 'should error if the value is < 1'
+			stack.push(-1)  
+		
+			-{ Commands.out(stack, '', STDIN, STDOUT) }.should.throw_error EvalError, 'Can not output negative values'
+		end
+		
+		it 'should error if the stack is empty'
+		  -{ Commands.out(stack, '', STDIN, STDOUT) }.should.throw_error EvalError, 'Stack does not have enough values'
+		end
+		
+		it 'should return undefined'
+		  stack.push(1)
+		  
+		  Commands.out(stack, '', STDIN, STDOUT).should.be_undefined
+		end
 	end
 	
 	describe 'add'
@@ -196,7 +228,7 @@ describe 'Commands'
 		end
 
 	  it 'should return undefined'
-	    Commands.add(stack).should.eql undefined
+	    Commands.add(stack).should.be_undefined
 	  end
 	end
 	
@@ -226,7 +258,7 @@ describe 'Commands'
 		end
 
 	  it 'should return undefined'
-	    Commands.subtract(stack).should.eql undefined
+	    Commands.subtract(stack).should.be_undefined
 	  end
 	end
 	
@@ -256,7 +288,7 @@ describe 'Commands'
 		end
 
 	  it 'should return undefined'
-	    Commands.multiply(stack).should.eql undefined
+	    Commands.multiply(stack).should.be_undefined
 	  end
 	end
 	
@@ -295,7 +327,7 @@ describe 'Commands'
 		end
 
 	  it 'should return undefined'
-	    Commands.divide(stack).should.eql undefined
+	    Commands.divide(stack).should.be_undefined
 	  end
 	end
 	
@@ -333,7 +365,7 @@ describe 'Commands'
 		end
 
 	  it 'should return undefined'
-	    Commands.mod(stack).should.eql undefined
+	    Commands.mod(stack).should.be_undefined
 	  end
 	end
 	
@@ -361,7 +393,7 @@ describe 'Commands'
 	  it 'should return undefined'
 	  	stack.push(2)
 	  	
-	    Commands.not(stack).should.eql undefined
+	    Commands.not(stack).should.be_undefined
 	  end
 	end
 	
@@ -397,7 +429,7 @@ describe 'Commands'
 	  it 'should return undefined'
 	  	stack = [1, 2]
 	  	
-	    Commands.greater(stack).should.eql undefined
+	    Commands.greater(stack).should.be_undefined
 	  end
 	end
 	
@@ -408,10 +440,10 @@ describe 'Commands'
 	end
 	
 	describe 'goto'
-	  
+	  // DO ME!
 	end
 	
 	describe 'assert'
-	  
+	  // DO ME!
 	end
 end
