@@ -306,7 +306,7 @@ describe 'Commands'
 	    stack.push(33)
 	  end
 	  
-	  it 'should pop top 2 values and remainder of their division (second top % top)'
+	  it 'should pop top 2 values and push the remainder of their division (second top % top)'
 	    Commands.mod(stack)
 	    
 	    stack.should.eql [10, 2]
@@ -366,11 +366,45 @@ describe 'Commands'
 	end
 	
 	describe 'greater'
+	  it 'should pop top 2 values and push 1 if second-top is > top'
+	  	stack = [2, 5, 3]
 	  
+	    Commands.greater(stack)
+	    
+	    stack.should.eql [2, 1]
+	  end
+
+	  it 'should pop top 2 values and push 0 if second-top is <= top'
+	  	stack = [2, 3, 5]
+	  
+	    Commands.greater(stack)
+	    
+	    stack.should.eql [2, 0]
+	  end
+	  
+		it 'should error if the stack is empty'
+		  stack = []
+		  
+		  -{ Commands.greater(stack) }.should.throw_error EvalError, 'Stack does not have enough values'
+		end
+				
+		it 'should error if stack has only one value'
+		  stack = [10]
+		  
+		  -{ Commands.greater(stack) }.should.throw_error EvalError, 'Stack does not have enough values'
+		end
+
+	  it 'should return undefined'
+	  	stack = [1, 2]
+	  	
+	    Commands.greater(stack).should.eql undefined
+	  end
 	end
 	
 	describe 'end'
-	  
+	  it 'should return internal program end label'
+	    Commands.end().should.eql '_END_'
+	  end
 	end
 	
 	describe 'goto'

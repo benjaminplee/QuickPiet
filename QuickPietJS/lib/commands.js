@@ -117,6 +117,16 @@ Commands = {
 		
 		stack.push(stack.pop() == 0 ? 1 : 0)
 	},
+	
+	greater : function(stack) {
+		this._enforce_min_stack_size(stack, 2)
+		
+		stack.push(stack.pop() < stack.pop() ? 1 : 0)
+	},
+	
+	end : function() {
+		return '_END_'	
+	},
 
 	_enforce_non_empty_stack : function(stack) {
 		this._enforce_min_stack_size(stack, 1)
