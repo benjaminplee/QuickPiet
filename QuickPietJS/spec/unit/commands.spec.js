@@ -147,16 +147,16 @@ describe 'Commands'
 		end
 		
 		it 'should error if the depth is negative'
-		  -{ Commands.roll(stack, '-1 1') }.should.throw_error SyntaxError, 'Invalid arguments(s)'
+		  -{ Commands.roll(stack, '-1 1') }.should.throw_error SyntaxError, 'Invalid argument(s)'
 		end
 		
 		it 'should error if invalid arguments are given (e.g. missing, commas, too many, letters, and decimals)'
-		  -{ Commands.roll(stack, '') }.should.throw_error SyntaxError, 'Invalid arguments(s)'
-		  -{ Commands.roll(stack, ' ') }.should.throw_error SyntaxError, 'Invalid arguments(s)'
-		  -{ Commands.roll(stack, '1, 1') }.should.throw_error SyntaxError, 'Invalid arguments(s)'
-		  -{ Commands.roll(stack, '1 1 3') }.should.throw_error SyntaxError, 'Invalid arguments(s)'
-		  -{ Commands.roll(stack, '1 a') }.should.throw_error SyntaxError, 'Invalid arguments(s)'
-		  -{ Commands.roll(stack, '1 2.5') }.should.throw_error SyntaxError, 'Invalid arguments(s)'
+		  -{ Commands.roll(stack, '') }.should.throw_error SyntaxError, 'Invalid argument(s)'
+		  -{ Commands.roll(stack, ' ') }.should.throw_error SyntaxError, 'Invalid argument(s)'
+		  -{ Commands.roll(stack, '1, 1') }.should.throw_error SyntaxError, 'Invalid argument(s)'
+		  -{ Commands.roll(stack, '1 1 3') }.should.throw_error SyntaxError, 'Invalid argument(s)'
+		  -{ Commands.roll(stack, '1 a') }.should.throw_error SyntaxError, 'Invalid argument(s)'
+		  -{ Commands.roll(stack, '1 2.5') }.should.throw_error SyntaxError, 'Invalid argument(s)'
 		end
 		
 		it 'should return undefined'
@@ -458,10 +458,83 @@ describe 'Commands'
 	end
 	
 	describe 'goto'
-	  // DO ME!
+	  it 'should pop the top value from the stack'
+	    stack.push(50)
+	    
+	    Commands.goto(stack, 'a b')
+	    
+	    stack.should.eql []
+	  end
+	  
+	  it 'should error if the stack is empty'
+	    -{ Commands.goto(stack, 'b c') }.should.throw_error EvalError, 'Stack does not have enough values'
+	  end
+
+		it 'should error if more than two arguments are given'
+		  -{ Commands.goto(stack, 'b c d') }.should.throw_error SyntaxError, 'Invalid argument(s)'
+		end
+		
+		it 'should error if fewer than two arguments are given'
+		  -{ Commands.goto(stack, 'a') }.should.throw_error SyntaxError, 'Invalid argument(s)'
+		  -{ Commands.goto(stack, ' ') }.should.throw_error SyntaxError, 'Invalid argument(s)'
+		  -{ Commands.goto(stack) }.should.throw_error SyntaxError, 'Invalid argument(s)'
+		end
+		
+		it 'should error if non alpha-numeric characters are found within the arguments'
+		  -{ Commands.goto(stack, '-b c!') }.should.throw_error SyntaxError, 'Invalid argument(s)'
+		end
+	  
+	  it 'should return the first label as a string if the top value = 1 MOD 4'
+	    stack.push(5)
+	    
+	    Commands.goto(stack, 'a b').should.eql 'a'
+	  end
+	  
+	  it 'should return the second label as a string if the top value = 3 MOD 4'
+	    stack.push(7)
+	    
+	    Commands.goto(stack, 'a b').should.eql 'b'
+	  end
+	  
+	  it 'should should return undefined if the top value = 0 or 2 MOD 4'
+	  	stack.push(16)
+	    Commands.goto(stack, 'a b').should.be_undefined
+
+	  	stack.push(18)
+	    Commands.goto(stack, 'a b').should.be_undefined
+	  end
+	  
+	  it 'should handle negative numbers in the normal way mod 4 (-1 = 1 MOD 4)'
+	    stack.push(-1)
+	    Commands.goto(stack, 'a b').should.eql 'a'
+	    
+	    stack.push(-2)
+	    Commands.goto(stack, 'a b').should.be_undefined
+	    
+	    stack.push(-3)
+	    Commands.goto(stack, 'a b').should.eql 'b'
+	  end
 	end
 	
 	describe 'assert'
-	  // DO ME!
+	  it 'should pop all values from the stack, leaving it empty'
+	    
+	  end
+	  
+	  it 'should error if there are no arguments and the stack is not empty'
+	    
+	  end
+	  
+	  it 'should error if the number of arguments > stack size'
+	    
+	  end
+	  
+	  it 'should error if the top value on the stack was not equal to the first argument'
+	    
+	  end
+	  
+	  it 'should error if any arguments were not on the stack in the correct order (top first)'
+	    
+	  end
 	end
 end
