@@ -32,7 +32,7 @@ Commands = {
 		}
 	},
 	
-	duplicate : function(stack, args) {
+	duplicate : function(stack) {
 		this._enforce_non_empty_stack(stack, 'DUPLICATE')
 		
 		var val = stack.pop()
