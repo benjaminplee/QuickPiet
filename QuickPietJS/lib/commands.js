@@ -1,7 +1,7 @@
 Commands = {
 	push : function(stack, args) {
 		if(!args || args.length == 0 || args.match(/[^0-9\s]/)) {
-			throw new SyntaxError("Invalid PUSH argument(s)")	
+			throw new SyntaxError("Invalid argument(s)")	
 		}
 		
 		jQuery.each(args.split(' '), function(index, value) {
@@ -16,16 +16,14 @@ Commands = {
 			args = jQuery.trim(args)
 			
 			if(args.length == 0 || args.match(/[^0-9\s]/) || parseInt(args) == NaN) {
-				throw new SyntaxError('Invalid POP argument(s)')	
+				throw new SyntaxError('Invalid argument(s)')	
 			}
 			else {
 				pops_count = parseInt(args)	
 			}
 		}
 		
-		if(pops_count > stack.length) {
-			throw new EvalError('Can not POP from empty stack')
-		}
+		this._enforce_min_stack_size(stack, pops_count)
 
 		for(var i = 0; i < pops_count; i++) {
 			stack.pop()
@@ -33,7 +31,7 @@ Commands = {
 	},
 	
 	duplicate : function(stack) {
-		this._enforce_non_empty_stack(stack, 'DUPLICATE')
+		this._enforce_non_empty_stack(stack)
 		
 		var val = stack.pop()
 		stack.push(val)
@@ -41,13 +39,13 @@ Commands = {
 	},
 	
 	add : function(stack) {
-		this._enforce_non_empty_stack(stack, 'ADD')
+		this._enforce_min_stack_size(stack, 2)
 		
 		stack.push(stack.pop() + stack.pop())
 	},
 	
 	subtract : function(stack) {
-		this._enforce_non_empty_stack(stack, 'SUBTRACT')
+		this._enforce_min_stack_size(stack, 2)
 		
 		var top = stack.pop()
 		var second_top = stack.pop()
@@ -55,13 +53,13 @@ Commands = {
 	},
 	
 	multiply : function(stack) {
-		this._enforce_non_empty_stack(stack, 'MULTIPLY')
+		this._enforce_min_stack_size(stack, 2)
 		
 		stack.push(stack.pop() * stack.pop())
 	},
 	
 	divide : function(stack) {
-		this._enforce_non_empty_stack(stack, 'DIVIDE')
+		this._enforce_min_stack_size(stack, 2)
 		
 		var top = stack.pop()
 		var second_top = stack.pop()
@@ -69,7 +67,7 @@ Commands = {
 	},
 	
 	mod : function(stack) {
-		this._enforce_non_empty_stack(stack, 'MOD')
+		this._enforce_min_stack_size(stack, 2)
 		
 		var top = stack.pop()
 		var second_top = stack.pop()
@@ -77,14 +75,18 @@ Commands = {
 	},
 	
 	not : function(stack) {
-		this._enforce_non_empty_stack(stack, 'NOT')
+		this._enforce_non_empty_stack(stack)
 		
 		stack.push(stack.pop() == 0 ? 1 : 0)
 	},
 
-	_enforce_non_empty_stack : function(stack, method_name) {
-		if(stack.length == 0) {
-			throw new EvalError('Can not ' + method_name + ' from empty stack')
+	_enforce_non_empty_stack : function(stack) {
+		this._enforce_min_stack_size(stack, 1)
+	},
+	
+	_enforce_min_stack_size : function(stack, min_size) {
+		if(stack.length < min_size) {
+			throw new EvalError('Stack does not have enough values')
 		}
 	}
 }

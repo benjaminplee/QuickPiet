@@ -4,19 +4,19 @@ describe 'Commands'
 	end
 
 	describe 'push'
-		it 'should push a single integer onto an empty stack'
+		it 'should a single integer onto an empty stack'
 			Commands.push(stack, '14')
 			
 			stack.should.eql [14]
 		end
 		
-		it 'should push multiple integers onto an empty stack'
+		it 'should multiple integers onto an empty stack'
 			Commands.push(stack, '100 0 1')
 			
 			stack.should.eql [100, 0, 1]
 		end
 		
-		it 'should push multiple integers onto a non-empty stack'
+		it 'should multiple integers onto a non-empty stack'
 			stack.push(1)
 			stack.push(2)
 			
@@ -30,27 +30,27 @@ describe 'Commands'
 		end
 		
 		it 'should error if missing arguments'
-			-{ Commands.push(stack) }.should.throw_error SyntaxError, 'Invalid PUSH argument(s)'
+			-{ Commands.push(stack) }.should.throw_error SyntaxError, 'Invalid argument(s)'
 		end
 		
 		it 'should error on negative integers'
-			-{ Commands.push(stack, '-1') }.should.throw_error SyntaxError, 'Invalid PUSH argument(s)'
+			-{ Commands.push(stack, '-1') }.should.throw_error SyntaxError, 'Invalid argument(s)'
 		end
 
 		it 'should error if commas are included'
-			-{ Commands.push(stack, '5,10') }.should.throw_error SyntaxError, 'Invalid PUSH argument(s)'
+			-{ Commands.push(stack, '5,10') }.should.throw_error SyntaxError, 'Invalid argument(s)'
 		end
 		
 		it 'should error if decimals are included'
-			-{ Commands.push(stack, '2.5') }.should.throw_error SyntaxError, 'Invalid PUSH argument(s)'
+			-{ Commands.push(stack, '2.5') }.should.throw_error SyntaxError, 'Invalid argument(s)'
 		end
 		
 		it 'should error if no arguments are included'
-			-{ Commands.push(stack, '') }.should.throw_error SyntaxError, 'Invalid PUSH argument(s)'
+			-{ Commands.push(stack, '') }.should.throw_error SyntaxError, 'Invalid argument(s)'
 		end
 		
 		it 'should error if values are non-numeric'
-			-{ Commands.push(stack, 'dog') }.should.throw_error SyntaxError, 'Invalid PUSH argument(s)'
+			-{ Commands.push(stack, 'dog') }.should.throw_error SyntaxError, 'Invalid argument(s)'
 		end
 	end
 	
@@ -77,14 +77,14 @@ describe 'Commands'
 		end
 		
 		it 'should error if argument is not a single positive numeric value'
-			-{ Commands.pop(stack, 'a') }.should.throw_error SyntaxError, 'Invalid POP argument(s)'
-			-{ Commands.pop(stack, '5.6') }.should.throw_error SyntaxError, 'Invalid POP argument(s)'
-			-{ Commands.pop(stack, '-1') }.should.throw_error SyntaxError, 'Invalid POP argument(s)'
+			-{ Commands.pop(stack, 'a') }.should.throw_error SyntaxError, 'Invalid argument(s)'
+			-{ Commands.pop(stack, '5.6') }.should.throw_error SyntaxError, 'Invalid argument(s)'
+			-{ Commands.pop(stack, '-1') }.should.throw_error SyntaxError, 'Invalid argument(s)'
 		end
 		
 		it 'should error if pop is called on an empty stack'
 			stack.pop()
-			-{ Commands.pop(stack) }.should.throw_error EvalError, 'Can not POP from empty stack'
+			-{ Commands.pop(stack) }.should.throw_error EvalError, 'Stack does not have enough values'
 		end
 		
 		it 'should error if multiple pops are more than stack height'
@@ -92,7 +92,7 @@ describe 'Commands'
 		  stack.push(200)
 		  stack.push(200)
 		  
-		  -{ Commands.pop(stack, '5') }.should.throw_error EvalError, 'Can not POP from empty stack'
+		  -{ Commands.pop(stack, '5') }.should.throw_error EvalError, 'Stack does not have enough values'
 		end
 		
 		it 'should return undefined'
@@ -101,7 +101,7 @@ describe 'Commands'
 	end
 	
 	describe 'duplicate'
-		it 'should push copy of top value'
+		it 'should copy of top value'
 		  stack.push(1)
 		  stack.push(2)
 		  
@@ -113,7 +113,7 @@ describe 'Commands'
 		end
 		
 		it 'should error if stack is empty'
-		  -{ Commands.duplicate(stack) }.should.throw_error EvalError, 'Can not DUPLICATE from empty stack'
+		  -{ Commands.duplicate(stack) }.should.throw_error EvalError, 'Stack does not have enough values'
 		end
 				
 		it 'should return undefined'
@@ -142,7 +142,7 @@ describe 'Commands'
 	    stack.push(10)
 	  end
 	  
-	  it 'should pop top 2 values and push result of their addition'
+	  it 'should pop top 2 values and result of their addition'
 	    Commands.add(stack)
 	    
 	    stack.should.eql [100, 15]
@@ -151,7 +151,13 @@ describe 'Commands'
 		it 'should error if the stack is empty'
 		  stack = []
 		  
-		  -{ Commands.add(stack) }.should.throw_error EvalError, 'Can not ADD from empty stack'
+		  -{ Commands.add(stack) }.should.throw_error EvalError, 'Stack does not have enough values'
+		end
+		
+		it 'should error if stack has only one value'
+		  stack = [10]
+		  
+		  -{ Commands.add(stack) }.should.throw_error EvalError, 'Stack does not have enough values'
 		end
 
 	  it 'should return undefined'
@@ -166,7 +172,7 @@ describe 'Commands'
 	    stack.push(30)
 	  end
 	  
-	  it 'should pop top 2 values and push result of their subtraction (second top - top)'
+	  it 'should pop top 2 values and result of their subtraction (second top - top)'
 	    Commands.subtract(stack)
 	    
 	    stack.should.eql [10, 170]
@@ -175,7 +181,13 @@ describe 'Commands'
 		it 'should error if the stack is empty'
 		  stack = []
 		  
-		  -{ Commands.subtract(stack) }.should.throw_error EvalError, 'Can not SUBTRACT from empty stack'
+		  -{ Commands.subtract(stack) }.should.throw_error EvalError, 'Stack does not have enough values'
+		end	
+			
+		it 'should error if stack has only one value'
+		  stack = [10]
+		  
+		  -{ Commands.subtract(stack) }.should.throw_error EvalError, 'Stack does not have enough values'
 		end
 
 	  it 'should return undefined'
@@ -190,7 +202,7 @@ describe 'Commands'
 	    stack.push(30)
 	  end
 	  
-	  it 'should pop top 2 values and push result of their multiplication'
+	  it 'should pop top 2 values and result of their multiplication'
 	    Commands.multiply(stack)
 	    
 	    stack.should.eql [10, 6000]
@@ -199,7 +211,13 @@ describe 'Commands'
 		it 'should error if the stack is empty'
 		  stack = []
 		  
-		  -{ Commands.multiply(stack) }.should.throw_error EvalError, 'Can not MULTIPLY from empty stack'
+		  -{ Commands.multiply(stack) }.should.throw_error EvalError, 'Stack does not have enough values'
+		end
+				
+		it 'should error if stack has only one value'
+		  stack = [10]
+		  
+		  -{ Commands.multiply(stack) }.should.throw_error EvalError, 'Stack does not have enough values'
 		end
 
 	  it 'should return undefined'
@@ -214,7 +232,7 @@ describe 'Commands'
 	    stack.push(50)
 	  end
 	  
-	  it 'should pop top 2 values and push result of their division (second top / top)'
+	  it 'should pop top 2 values and result of their division (second top / top)'
 	    Commands.divide(stack)
 	    
 	    stack.should.eql [10, 4]
@@ -232,7 +250,13 @@ describe 'Commands'
 		it 'should error if the stack is empty'
 		  stack = []
 		  
-		  -{ Commands.divide(stack) }.should.throw_error EvalError, 'Can not DIVIDE from empty stack'
+		  -{ Commands.divide(stack) }.should.throw_error EvalError, 'Stack does not have enough values'
+		end
+				
+		it 'should error if stack has only one value'
+		  stack = [10]
+		  
+		  -{ Commands.divide(stack) }.should.throw_error EvalError, 'Stack does not have enough values'
 		end
 
 	  it 'should return undefined'
@@ -247,7 +271,7 @@ describe 'Commands'
 	    stack.push(33)
 	  end
 	  
-	  it 'should pop top 2 values and push remainder of their division (second top % top)'
+	  it 'should pop top 2 values and remainder of their division (second top % top)'
 	    Commands.mod(stack)
 	    
 	    stack.should.eql [10, 2]
@@ -264,7 +288,13 @@ describe 'Commands'
 		it 'should error if the stack is empty'
 		  stack = []
 		  
-		  -{ Commands.mod(stack) }.should.throw_error EvalError, 'Can not MOD from empty stack'
+		  -{ Commands.mod(stack) }.should.throw_error EvalError, 'Stack does not have enough values'
+		end
+				
+		it 'should error if stack has only one value'
+		  stack = [10]
+		  
+		  -{ Commands.mod(stack) }.should.throw_error EvalError, 'Stack does not have enough values'
 		end
 
 	  it 'should return undefined'
@@ -290,7 +320,7 @@ describe 'Commands'
 	  end
 	  
 		it 'should error if the stack is empty'
-		  -{ Commands.not(stack) }.should.throw_error EvalError, 'Can not NOT from empty stack'
+		  -{ Commands.not(stack) }.should.throw_error EvalError, 'Stack does not have enough values'
 		end
 
 	  it 'should return undefined'
