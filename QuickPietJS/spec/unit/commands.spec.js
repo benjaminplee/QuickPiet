@@ -145,7 +145,30 @@ describe 'Commands'
 	end
 	
 	describe 'add'
+	  before_each
+	    stack.push(5)
+	    stack.push(10)
+	  end
 	  
+	  it 'should pop top 2 values and push result of their addition'
+	    Commands.add(stack)
+	    
+	    stack.should.eql [15]
+	  end
+
+		it 'should error if the stack is empty'
+		  stack = []
+		  
+		  -{ Commands.add(stack) }.should.throw_error EvalError, 'Can not ADD from empty stack'
+		end
+	  
+	  it 'should error if arguments are given'
+	    -{ Commands.add(stack, '') }.should.throw_error SyntaxError, 'ADD does not take arguments'
+	  end
+	  
+	  it 'should return undefined'
+	    Commands.add(stack).should.eql undefined
+	  end
 	end
 	
 	describe 'subtract'
