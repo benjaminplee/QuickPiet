@@ -184,11 +184,60 @@ describe 'Commands'
 	end
 	
 	describe 'multiply'
+	  before_each
+	  	stack.push(10)
+	    stack.push(200)
+	    stack.push(30)
+	  end
 	  
+	  it 'should pop top 2 values and push result of their multiplication'
+	    Commands.multiply(stack)
+	    
+	    stack.should.eql [10, 6000]
+	  end
+
+		it 'should error if the stack is empty'
+		  stack = []
+		  
+		  -{ Commands.multiply(stack) }.should.throw_error EvalError, 'Can not MULTIPLY from empty stack'
+		end
+
+	  it 'should return undefined'
+	    Commands.multiply(stack).should.eql undefined
+	  end
 	end
 	
 	describe 'divide'
+	  before_each
+	  	stack.push(10)
+	    stack.push(200)
+	    stack.push(50)
+	  end
 	  
+	  it 'should pop top 2 values and push result of their division (second top / top)'
+	    Commands.divide(stack)
+	    
+	    stack.should.eql [10, 4]
+	  end
+	  
+	  it 'should perform integer division (drop decimal)'
+	    stack.push(26)
+	    
+	    // 50/26 = 1.92... = 1
+	    Commands.divide(stack)
+	    
+	    stack.should.eql [10, 200, 1]
+	  end
+
+		it 'should error if the stack is empty'
+		  stack = []
+		  
+		  -{ Commands.divide(stack) }.should.throw_error EvalError, 'Can not DIVIDE from empty stack'
+		end
+
+	  it 'should return undefined'
+	    Commands.divide(stack).should.eql undefined
+	  end
 	end
 	
 	describe 'mod'

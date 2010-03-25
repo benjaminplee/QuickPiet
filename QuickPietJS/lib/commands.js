@@ -53,6 +53,20 @@ Commands = {
 		var second_top = stack.pop()
 		stack.push(second_top - top)
 	},
+	
+	multiply : function(stack) {
+		this._enforce_non_empty_stack(stack, 'MULTIPLY')
+		
+		stack.push(stack.pop() * stack.pop())
+	},
+	
+	divide : function(stack) {
+		this._enforce_non_empty_stack(stack, 'DIVIDE')
+		
+		var top = stack.pop()
+		var second_top = stack.pop()
+		stack.push(parseInt(second_top / top))
+	},
 
 	_enforce_non_empty_stack : function(stack, method_name) {
 		if(stack.length == 0) {
