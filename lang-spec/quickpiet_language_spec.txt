@@ -26,9 +26,9 @@ roll               --> Pops the top two values, and "rolls" the remaining stack 
                    --> Rolling the stack [1,2,3,4,5] 2 rolls to a depth of 3 results in [1,2,5,3,4]
                    --> Another roll of value 2, with depth 3, results in [1,2,4,5,3]
 
-in                 --> Read a single value from STDIN and push it onto the stack; characters are read as their ASCII value
+input              --> Read a single value from STDIN and push it onto the stack; characters are read as their ASCII value
 
-out                --> Pop the top value from the stack and output it to STDOUT in it's ASCII character value
+output             --> Pop the top value from the stack and output it to STDOUT in it's ASCII character value
 
 add                --> Pops the top two values, adds them, and pushes the result
 
