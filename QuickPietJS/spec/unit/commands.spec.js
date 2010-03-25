@@ -137,6 +137,7 @@ describe 'Commands'
 	
 	describe 'add'
 	  before_each
+	  	stack.push(100)
 	    stack.push(5)
 	    stack.push(10)
 	  end
@@ -144,7 +145,7 @@ describe 'Commands'
 	  it 'should pop top 2 values and push result of their addition'
 	    Commands.add(stack)
 	    
-	    stack.should.eql [15]
+	    stack.should.eql [100, 15]
 	  end
 
 		it 'should error if the stack is empty'
@@ -159,7 +160,27 @@ describe 'Commands'
 	end
 	
 	describe 'subtract'
+	  before_each
+	  	stack.push(10)
+	    stack.push(200)
+	    stack.push(30)
+	  end
 	  
+	  it 'should pop top 2 values and push result of their subtraction (second top - top)'
+	    Commands.subtract(stack)
+	    
+	    stack.should.eql [10, 170]
+	  end
+
+		it 'should error if the stack is empty'
+		  stack = []
+		  
+		  -{ Commands.subtract(stack) }.should.throw_error EvalError, 'Can not SUBTRACT from empty stack'
+		end
+
+	  it 'should return undefined'
+	    Commands.subtract(stack).should.eql undefined
+	  end
 	end
 	
 	describe 'multiply'

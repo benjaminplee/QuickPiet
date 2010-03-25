@@ -45,6 +45,14 @@ Commands = {
 		
 		stack.push(stack.pop() + stack.pop())
 	},
+	
+	subtract : function(stack) {
+		this._enforce_non_empty_stack(stack, 'SUBTRACT')
+		
+		var top = stack.pop()
+		var second_top = stack.pop()
+		stack.push(second_top - top)
+	},
 
 	_enforce_non_empty_stack : function(stack, method_name) {
 		if(stack.length == 0) {
