@@ -124,7 +124,42 @@ describe 'Commands'
 	end
 	
 	describe 'roll'
-	
+		before_each
+		  stack = [1, 2, 3, 4, 5]
+		end
+		
+		it 'should roll top stack values to a depth of the first arg, the second arg number of times'
+		  Commands.roll(stack, '4 2')
+		  
+		  stack.should.eql [1, 4, 5, 2, 3]
+		end
+		
+		it 'should error if the stack is shorter than the requested depth'
+		  -{ Commands.roll(stack, '10 1') }.should.throw_error EvalError, 'Stack does not have enough values'
+		end
+
+		it 'should handle negative turns by rolling in the opposite direction'
+		  Commands.roll(stack, '3 -1')
+		  
+		  stack.should.eql [1, 2, 4, 5, 3]
+		end
+		
+		it 'should error if the depth is negative'
+		  -{ Commands.roll(stack, '-1 1') }.should.throw_error SyntaxError, 'Invalid arguments(s)'
+		end
+		
+		it 'should error if invalid arguments are given (e.g. missing, commas, too many, letters, and decimals)'
+		  -{ Commands.roll(stack, '') }.should.throw_error SyntaxError, 'Invalid arguments(s)'
+		  -{ Commands.roll(stack, ' ') }.should.throw_error SyntaxError, 'Invalid arguments(s)'
+		  -{ Commands.roll(stack, '1, 1') }.should.throw_error SyntaxError, 'Invalid arguments(s)'
+		  -{ Commands.roll(stack, '1 1 3') }.should.throw_error SyntaxError, 'Invalid arguments(s)'
+		  -{ Commands.roll(stack, '1 a') }.should.throw_error SyntaxError, 'Invalid arguments(s)'
+		  -{ Commands.roll(stack, '1 2.5') }.should.throw_error SyntaxError, 'Invalid arguments(s)'
+		end
+		
+		it 'should return undefined'
+		  Commands.roll(stack, '2 1').should.eql undefined
+		end
 	end
 	
 	describe 'in'

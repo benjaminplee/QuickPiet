@@ -38,6 +38,44 @@ Commands = {
 		stack.push(val)
 	},
 	
+	roll : function(stack, args) {
+		args = jQuery.trim(args)
+		
+		if(!args || args.match(/[^0-9\-\s]/)) {
+			throw new SyntaxError('Invalid arguments(s)')
+		}
+		
+		var args_array = args.split(' ')
+		
+		if(args_array.length != 2) {
+			throw new SyntaxError('Invalid arguments(s)')
+		}
+		
+		var depth = parseInt(args_array[0])
+		var turns = parseInt(args_array[1])
+		
+		if(depth < 1) {
+			throw new SyntaxError('Invalid arguments(s)')
+		}
+		
+		this._enforce_min_stack_size(stack, depth)
+		
+		var depth_index = stack.length - depth
+		
+		if(turns >= 0) {
+			for(var turn = 0; turn < turns; turn++) {
+				stack.splice(depth_index, 0, stack.pop())
+			}
+		}
+		else {
+			turns = turns * -1
+			
+			for(var turn = 0; turn < turns; turn++) {
+				stack.push(stack.splice(depth_index, 1)[0])
+			}
+		}
+	},
+	
 	add : function(stack) {
 		this._enforce_min_stack_size(stack, 2)
 		
