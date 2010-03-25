@@ -164,15 +164,33 @@ describe 'Commands'
 		end
 	end
 	
-	describe 'in'
-	  // DO ME!
+	describe 'input'
+		before_each
+		  STDIN.push('H')
+		end
+	
+	  it 'should pop a character from STDIN'
+	    Commands.input(stack, '', STDIN, STDOUT)
+	    
+	    STDIN.should.eql []
+	  end
+	  
+	  it 'should push the ASCII value of that character onto the stack'
+	    Commands.input(stack, '', STDIN, STDOUT)
+	    
+	    stack.should.eql [72]
+	  end
+	  
+	  it 'should return undefined'
+	    Commands.input(stack, '', STDIN, STDOUT).should.be_undefined
+	  end
 	end
 	
-	describe 'out'
+	describe 'output'
 		it 'should pop the top value from the stack'
 		  stack.push(32)
 		  
-		  Commands.out(stack, '', STDIN, STDOUT)
+		  Commands.output(stack, '', STDIN, STDOUT)
 		  
 		  stack.should.eql []
 		end
@@ -180,7 +198,7 @@ describe 'Commands'
 		it 'should \'push\' the ASCII character associated with the top value onto STDOUT'
 			stack.push(32)
 		  
-		  Commands.out(stack, '', STDIN, STDOUT)
+		  Commands.output(stack, '', STDIN, STDOUT)
 
 			STDOUT.should.eql [' ']
 		end
@@ -188,17 +206,17 @@ describe 'Commands'
 		it 'should error if the value is < 1'
 			stack.push(-1)  
 		
-			-{ Commands.out(stack, '', STDIN, STDOUT) }.should.throw_error EvalError, 'Can not output negative values'
+			-{ Commands.output(stack, '', STDIN, STDOUT) }.should.throw_error EvalError, 'Can not output negative values'
 		end
 		
 		it 'should error if the stack is empty'
-		  -{ Commands.out(stack, '', STDIN, STDOUT) }.should.throw_error EvalError, 'Stack does not have enough values'
+		  -{ Commands.output(stack, '', STDIN, STDOUT) }.should.throw_error EvalError, 'Stack does not have enough values'
 		end
 		
 		it 'should return undefined'
 		  stack.push(1)
 		  
-		  Commands.out(stack, '', STDIN, STDOUT).should.be_undefined
+		  Commands.output(stack, '', STDIN, STDOUT).should.be_undefined
 		end
 	end
 	

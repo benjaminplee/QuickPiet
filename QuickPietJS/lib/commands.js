@@ -76,7 +76,11 @@ Commands = {
 		}
 	},
 	
-	out : function(stack, args, STDIN, STDOUT) {
+	input : function(stack, args, STDIN, STDOUT) {
+		stack.push(STDIN.pop().charCodeAt(0))
+	},
+	
+	output : function(stack, args, STDIN, STDOUT) {
 		this._enforce_non_empty_stack(stack)
 		
 		var numeric_value = stack.pop()
