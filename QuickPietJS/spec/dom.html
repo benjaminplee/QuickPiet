@@ -5,11 +5,12 @@
 		<script src="./lib/jspec.js"></script>
 		<script src="./lib/jspec.xhr.js"></script>
 		<script src="../lib/commands.js"></script>
-		<script src="unit/spec.helper.js"></script>
+		<script src="../lib/quickpiet.js"></script>
 		<script>
 			function runSuites() {
 				JSpec
 				.exec('unit/commands.spec.js')
+				.exec('unit/quickpiet.spec.js')
 				.exec('unit/sanity_check.spec.js')
 				.run({ fixturePath: 'fixtures' })
 				.report()
@@ -17,8 +18,9 @@
 		</script>
 	</head>
 	<body class="jspec" onLoad="runSuites();">
-		<div id="jspec-top"><h2 id="jspec-title">JSpec <em><script>document.write(JSpec.version)</script></em></h2></div>
-		<div id="jspec"></div>
+		<div id="jspec-top"><h2 id="jspec-title">QuickPietJS<em> <script>document.write(JSpec.version)</script></em></h2></div>
+		<div id="jspec">
+		</div>
 		<div id="jspec-bottom"></div>
 	</body>
 </html>

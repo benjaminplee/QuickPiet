@@ -4,18 +4,18 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<title>
-			QuickPietJS
+			QuickPietJS Test Page
 		</title>
-		<meta name="generator" content="TextMate http://macromates.com/" />
-		<meta name="author" content="Benjamin P Lee - leebenjp" />
-		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="lib/quickpiet.js" type="text/javascript" charset="utf-8"></script>
+		<script src="lib/commands.js" type="text/javascript" charset="utf-8"></script>
+		<script src="spec/support/jquery.js" type="text/javascript" charset="utf-8"></script>
 	</head>
 	<body>
 		<div style="float:left;">
 			Commands:
 			<br />
 			<textarea id="commands" cols="40" rows="40" >
+# default dummy commands
 :top
 
 push 105
@@ -43,12 +43,7 @@ out
 			<textarea id="stack" cols="10" rows="40" ></textarea>
 		</div>
 		<div style="float:left;">
-			<input type="button" value="Run" id="run" />
-		</div>
-		<div style="float:left;">
-			Log:
-			<br />
-			<textarea id="log" cols="80" rows="10" ></textarea>
+			<input type="button" value="Run" id="run" onclick="QuickPietJS.Run($('#commands'),$('#input'),$('#output'))"/>
 		</div>
 	</body>
 </html>

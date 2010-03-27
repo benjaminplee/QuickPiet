@@ -4,6 +4,14 @@ describe 'Commands'
 		STDIN = []
 		STDOUT = []
 	end
+	
+	describe 'label (:)'
+	  it 'should do nothing'
+	    Commands[':'](stack)
+	    
+	    stack.should.eql []
+	  end
+	end
 
 	describe 'push'
 		it 'should push a single integer onto an empty stack'

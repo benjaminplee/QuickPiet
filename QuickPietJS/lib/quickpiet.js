@@ -1,62 +1,115 @@
-// http://www.agavegroup.com/agWork/prettyForms/
+QuickPietJS = {}
 
-function quickpietjs(commands_id, input_id, output_id, stack_id, log_id) {
-	var commands = $(commands_id);
-	var input = $(input_id);
-	var output = $(output_id);
-	var stack = $(stack_id);
+QuickPietJS.Run = function(command_textarea, stdin_textarea, stdout_textarea) {
+	var cmds = new QuickPietJS.stdio.textarea(command_textarea)
+	var stdin = new QuickPietJS.stdio.textarea(stdin_textarea)
+	var stdout = new QuickPietJS.stdio.textarea(stdout_textarea)
+	var stack = []
+	var proc = new QuickPietJS.CommandProcessor()
 	
-	var log_window = $(log_id);
-	var log = function(text) {
-		log_window.val(log_window.val() + text + "\n");
-	}
-	log.clear = function() {
-		log_window.val('');
-	}
+	var split_commands = proc.SplitCommands(proc.GrabCleanInputLines(cmds))
 	
-	return function() {
-		run(commands, input, output, stack, log);
-	};
+	proc.Executor(proc.BindCommandArguments(Commands, stack, stdin, stdout), split_commands, proc.BuildLabelMap(split_commands))
 }
 
-function run(commands_win, input_win, output_win, stack_win, log) {
-	log.clear();
-	log("Starting QuickPiet run.");
+QuickPietJS.stdio = {}
+
+QuickPietJS.stdio.textarea = function(element) {
+	this.element = element;
+}
+
+QuickPietJS.stdio.textarea.prototype.pop = function() {
+	var buffer = this.element.val()
 	
-	log("Initializing stack.");
-	var the_stack = [];
+	if(buffer.length == 0) {
+		throw new EvalError('Can not pop from empty buffer')	
+	}
 	
+	this.element.val(buffer.substring(1))
 	
-	log("Parsing text commands");
-	var commands = commands_win.val().split("\n").filter(function(command) {
-		var trim = jQuery.trim(command);
-		return trim.length > 0 && trim[0] != '#'; 
-	}).map(function(command) {
-		var parts = command.split(' ');
+	return buffer[0]
+}
+
+QuickPietJS.stdio.textarea.prototype.push = function(value) {
+	this.element.val(this.element.val() + value)
+}
+
+QuickPietJS.stdio.textarea.prototype.grab = function() {
+	return this.element.val()
+}
+
+QuickPietJS.CommandProcessor = function() { }
+QuickPietJS.CommandProcessor.prototype.GrabCleanInputLines = function(buffer) {
+	var value = buffer.grab()
+	var lines = value.split('\n')
+	
+	lines = jQuery.map(lines, function(line) {
+		return jQuery.trim(line)
+	})	
+	
+	lines = jQuery.grep(lines, function(line) {
+		return line && (line.length > 0) && (line[0] != '#')
+	})
+	
+	return lines
+}
+
+QuickPietJS.CommandProcessor.prototype.SplitCommands = function(lines) {
+	var result = []
+	
+	jQuery.each(lines, function(index, line) {
+		line = line.replace(/^\:/, ': ')
 		
-		if(parts.length == 2 && parts[0] == 'push' && !isNaN(parts[1])) {
-			return function(stack) {
-				stack.push(parts[2]);
-			}
+		var first_space = line.indexOf(' ')
+		
+		if(first_space != -1) {
+			var command = line.substring(0, first_space)
+			var args = line.substring(first_space + 1)
+
+			result.push([command, args])
 		}
-		
-	});
-	log("Found " + commands.length + " text commands.");
+		else {
+			result.push([line, ''])
+		}
+	})
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	log("Finished QuickPiet run.");
+	return result
 }
 
+QuickPietJS.CommandProcessor.prototype.BuildLabelMap = function(split_lines) {
+	var map = { '_END_' : -1 }	
+	
+	jQuery.each(split_lines, function(index, split_line) {
+		if(split_line[0] == ':') {
+			map[split_line[1]] = index
+		}
+	})
+	
+	return map
+}
 
-$().ready(function(e) {
-	$('#run').click(quickpietjs('#commands', '#input', '#output', '#stack', '#log'));
-});
+QuickPietJS.CommandProcessor.prototype.BindCommandArguments = function(commands, stack, STDIN, STDOUT) {
+	var bound_commands = {}
+
+	jQuery.each(commands, function(command_name, command_function) {
+		if(command_name[0] != '_') {
+			bound_commands[command_name] = function(args) {
+				return command_function(stack, args, STDIN, STDOUT)	
+			}
+		}	
+	})
+
+	return bound_commands
+}
+
+QuickPietJS.CommandProcessor.prototype.Executor = function(commands, split_commands, label_map) {
+	var command_index = 0
+	var num_commands = split_commands.length
+	
+	while(command_index >= 0 && command_index < num_commands) {
+		var current_split_command = split_commands[command_index]
+		var command_result = commands[current_split_command[0]](current_split_command[1])
+		
+		command_index = command_result && label_map[command_result] || (command_index + 1)
+	}
+}

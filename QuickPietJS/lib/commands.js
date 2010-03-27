@@ -1,4 +1,6 @@
 Commands = {
+	':' : function() { },
+	
 	push : function(stack, args) {
 		if(!args || args.length == 0 || args.match(/[^0-9\s]/)) {
 			throw new SyntaxError("Invalid argument(s)")	
@@ -83,7 +85,9 @@ Commands = {
 	
 	// Done as a string b/c of issue in Chrome
 	'out' : function(stack, args, STDIN, STDOUT) {
-		this._enforce_non_empty_stack(stack)
+		// Comands._enforce_non_empty_stack(stack)
+		// this._enforce_non_empty_stack(stack)
+		// this['_enforce_non_empty_stack'](stack)
 		
 		var numeric_value = stack.pop()
 		
