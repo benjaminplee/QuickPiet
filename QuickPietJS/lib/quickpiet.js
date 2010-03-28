@@ -1,15 +1,20 @@
 QuickPietJS = {}
 
 QuickPietJS.Run = function(command_textarea, stdin_textarea, stdout_textarea) {
-	var cmds = new QuickPietJS.stdio.textarea(command_textarea)
-	var stdin = new QuickPietJS.stdio.textarea(stdin_textarea)
-	var stdout = new QuickPietJS.stdio.textarea(stdout_textarea)
-	var stack = []
-	var proc = new QuickPietJS.CommandProcessor()
-	
-	var split_commands = proc.SplitCommands(proc.GrabCleanInputLines(cmds))
-	
-	proc.Executor(proc.BindCommandArguments(Commands, stack, stdin, stdout), split_commands, proc.BuildLabelMap(split_commands))
+	try {
+		var cmds = new QuickPietJS.stdio.textarea(command_textarea)
+		var stdin = new QuickPietJS.stdio.textarea(stdin_textarea)
+		var stdout = new QuickPietJS.stdio.textarea(stdout_textarea)
+		var stack = []
+		var proc = new QuickPietJS.CommandProcessor()
+		
+		var split_commands = proc.SplitCommands(proc.GrabCleanInputLines(cmds))
+		
+		proc.Executor(proc.BindCommandArguments(Commands, stack, stdin, stdout), split_commands, proc.BuildLabelMap(split_commands))
+	}
+	catch(e) {
+		alert(e)	
+	}
 }
 
 QuickPietJS.stdio = {}

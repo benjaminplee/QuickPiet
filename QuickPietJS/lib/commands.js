@@ -25,7 +25,7 @@ Commands = {
 			}
 		}
 		
-		this._enforce_min_stack_size(stack, pops_count)
+		Commands._enforce_min_stack_size(stack, pops_count)
 
 		for(var i = 0; i < pops_count; i++) {
 			stack.pop()
@@ -33,7 +33,7 @@ Commands = {
 	},
 	
 	duplicate : function(stack) {
-		this._enforce_non_empty_stack(stack)
+		Commands._enforce_non_empty_stack(stack)
 		
 		var val = stack.pop()
 		stack.push(val)
@@ -60,7 +60,7 @@ Commands = {
 			throw new SyntaxError('Invalid argument(s)')
 		}
 		
-		this._enforce_min_stack_size(stack, depth)
+		Commands._enforce_min_stack_size(stack, depth)
 		
 		var depth_index = stack.length - depth
 		
@@ -85,9 +85,7 @@ Commands = {
 	
 	// Done as a string b/c of issue in Chrome
 	'out' : function(stack, args, STDIN, STDOUT) {
-		// Comands._enforce_non_empty_stack(stack)
-		// this._enforce_non_empty_stack(stack)
-		// this['_enforce_non_empty_stack'](stack)
+		Commands._enforce_non_empty_stack(stack)
 		
 		var numeric_value = stack.pop()
 		
@@ -99,13 +97,13 @@ Commands = {
 	},
 	
 	add : function(stack) {
-		this._enforce_min_stack_size(stack, 2)
+		Commands._enforce_min_stack_size(stack, 2)
 		
 		stack.push(stack.pop() + stack.pop())
 	},
 	
 	subtract : function(stack) {
-		this._enforce_min_stack_size(stack, 2)
+		Commands._enforce_min_stack_size(stack, 2)
 		
 		var top = stack.pop()
 		var second_top = stack.pop()
@@ -113,13 +111,13 @@ Commands = {
 	},
 	
 	multiply : function(stack) {
-		this._enforce_min_stack_size(stack, 2)
+		Commands._enforce_min_stack_size(stack, 2)
 		
 		stack.push(stack.pop() * stack.pop())
 	},
 	
 	divide : function(stack) {
-		this._enforce_min_stack_size(stack, 2)
+		Commands._enforce_min_stack_size(stack, 2)
 		
 		var top = stack.pop()
 		var second_top = stack.pop()
@@ -127,7 +125,7 @@ Commands = {
 	},
 	
 	mod : function(stack) {
-		this._enforce_min_stack_size(stack, 2)
+		Commands._enforce_min_stack_size(stack, 2)
 		
 		var top = stack.pop()
 		var second_top = stack.pop()
@@ -135,13 +133,13 @@ Commands = {
 	},
 	
 	not : function(stack) {
-		this._enforce_non_empty_stack(stack)
+		Commands._enforce_non_empty_stack(stack)
 		
 		stack.push(stack.pop() == 0 ? 1 : 0)
 	},
 	
 	greater : function(stack) {
-		this._enforce_min_stack_size(stack, 2)
+		Commands._enforce_min_stack_size(stack, 2)
 		
 		stack.push(stack.pop() < stack.pop() ? 1 : 0)
 	},
@@ -163,7 +161,7 @@ Commands = {
 			throw new SyntaxError('Invalid argument(s)')
 		}
 		
-		this._enforce_non_empty_stack(stack)
+		Commands._enforce_non_empty_stack(stack)
 		
 		var switch_value = stack.pop() % 4
 		switch_value = switch_value < 0 ? switch_value * (-1) : switch_value
@@ -195,7 +193,7 @@ Commands = {
 	},
 
 	_enforce_non_empty_stack : function(stack) {
-		this._enforce_min_stack_size(stack, 1)
+		Commands._enforce_min_stack_size(stack, 1)
 	},
 	
 	_enforce_min_stack_size : function(stack, min_size) {
