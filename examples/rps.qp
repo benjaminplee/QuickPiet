@@ -2,59 +2,244 @@
 # Simple two player game based on Nate Young's original challenge: http://twoguysarguing.wordpress.com/2009/12/09/rock-paper-scissors/
 
 # **** Player 1 Name: ****
-push 80
+push 32 58 101 109 97 78 32 49 32 114 101 121 97 108 80
 out
-push 108
 out
-push 97
 out
-push 121
 out
-push 101
 out
-push 114
 out
-push 32
 out
-push 49
 out
-push 32
 out
-push 78
 out
-push 97
 out
-push 109
 out
-push 101
 out
-push 58
 out
-push 32
 out
 
-# **** Input Player 1 Name ****
-:inputPlayer1NameCharacter
+# **** push delimeter ****
+push 1 2
+subtract
+
+# **** Input player 1 name until new line ****
+:p1inputname
 in
 duplicate
-push 13
+push 10
 subtract
 not
 not
-goto inputPlayer1NameCharacter NA
+goto p1inputname IGNORE
+pop
 
+# **** reverse the name ****
 
-
-# DO MORE STUFF!
-
-
-
-# Flush STDOUT buffer so that the output is easier to read
-push 13
+# **** Player 2 Name: ****
+push 32 58 101 109 97 78 32 40 32 114 101 121 97 108 80
 out
+out
+out
+out
+out
+out
+out
+out
+out
+out
+out
+out
+out
+out
+out
+
+# **** insert delimeter ****
+push 1 2
+subtract
+
+# **** Input player 2 name until new line ****
+:p2inputname
+in
+duplicate
 push 10
+subtract
+not
+not
+goto p2inputname IGNORE
+pop
+
+# **** reverse name ****
+
+# **** [R]ock, [P]aper, or [S]cissors? for player 1 ****
+push 32 63 115 114 111 115 115 105 99 93 83 91 32 114 111 32 44 114 101 112 97 93 80 91 32 44 107 99 111 93 82 91
 out
-push 13
 out
-push 10
 out
+out
+out
+out
+out
+out
+out
+out
+out
+out
+out
+out
+out
+out
+out
+out
+out
+out
+out
+out
+out
+out
+out
+out
+out
+out
+out
+out
+out
+out
+
+# **** input player 1 move ****
+in
+in
+pop
+
+# **** [R]ock, [P]aper, or [S]cissors? for player 2 ****
+push 32 63 115 114 111 115 115 105 99 93 83 91 32 114 111 32 44 114 101 112 97 93 80 91 32 44 107 99 111 93 82 91
+out
+out
+out
+out
+out
+out
+out
+out
+out
+out
+out
+out
+out
+out
+out
+out
+out
+out
+out
+out
+out
+out
+out
+out
+out
+out
+out
+out
+out
+out
+out
+out
+
+# **** input player 2 move ****
+in
+in
+pop
+
+# **** figure out who won, leave 1 for player 1, leave 3 for player 2, leave 0 for tie
+# R 82
+# P 80
+# S 83 
+# RS -1 player 1
+# PR -2 player 1
+# SP 3 player 1
+# RP 2 player 2
+# PS -3 player 2
+# SR 1 player 2
+subtract
+
+duplicate
+push 0
+subtract
+not
+goto tie NOWHERE
+
+duplicate
+push 1
+subtract
+not
+goto winplayer2 NOWHERE
+duplicate
+push 2
+subtract
+not
+goto winplayer2 NOWHERE
+duplicate
+push 0
+push 3
+subtract
+subtract
+not
+goto winplayer2 NOWHERE
+
+duplicate
+push 0
+push 1
+subtract
+subtract
+not
+goto winplayer1 NOWHERE
+duplicate
+push 0
+push 2
+subtract
+subtract
+not
+goto winplayer1 NOWHERE
+duplicate
+push 3
+subtract
+not
+goto winplayer1 NOWHERE
+
+:bad inputs
+push 100000
+out
+end
+
+:tie
+push 33 69 73 84
+out
+out
+out
+out
+end
+
+:winplayer2
+pop
+push 33 115 110 105 87 32 50
+out
+out
+out
+out
+out
+out
+out
+end
+
+:winplayer1
+pop
+push 33 115 110 105 87 32 49
+out
+out
+out
+out
+out
+out
+out
+end

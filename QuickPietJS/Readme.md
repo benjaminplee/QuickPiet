@@ -1,29 +1,19 @@
 
-# YourLib
+# QuickPietJS
 
-Description
+This is a implementation of the QuickPiet language written entirely in Javascript to be run from index.html
 
-## License 
+Future enhancements will hopefully include
+* Reading characters from STDIN should wait until a character is present
+	(may need event structure rewrite and/or ability to pause operation at arbitrary command)
+* Modify language to support out with argument (number of items to output)
+* A better looking editor page
+* Better error handling and error-line handling
+* Ability to step through operations
+* Ability to see the end and per-step stack values
+* Ability to 'save' QuickPiet programs using HTML 5
 
-(The MIT License)
-
-Copyright (c) 2009 Your Name &lt;Your Email&gt;
-
-Permission is hereby granted, free of charge, to any person obtaining
-a copy of this software and associated documentation files (the
-'Software'), to deal in the Software without restriction, including
-without limitation the rights to use, copy, modify, merge, publish,
-distribute, sublicense, and/or sell copies of the Software, and to
-permit persons to whom the Software is furnished to do so, subject to
-the following conditions:
-
-The above copyright notice and this permission notice shall be
-included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
-CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
-TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
-SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+Useful websites:
+http://www.java2s.com/Tutorial/JavaScriptDemo/Reversethewords.htm
+http://easycalculation.com/ascii-hex.php
+http://www.javascriptkit.com/script/script2/countwords.shtml

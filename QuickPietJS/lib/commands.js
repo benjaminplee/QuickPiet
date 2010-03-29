@@ -80,7 +80,12 @@ Commands = {
 	
 	// Done as a string b/c of issue in Chrome
 	'in' : function(stack, args, STDIN, STDOUT) {
-		stack.push(STDIN.pop().charCodeAt(0))
+		var character = STDIN.pop()
+		var numeric_value = character.charCodeAt(0)
+		
+		console && console.log('IN:(' + numeric_value + '|' + character + ')')
+		
+		stack.push(numeric_value)
 	},
 	
 	// Done as a string b/c of issue in Chrome
@@ -93,7 +98,11 @@ Commands = {
 			throw new EvalError('Can not output negative values')
 		}
 		
-		STDOUT.push(String.fromCharCode(numeric_value))
+		var character = String.fromCharCode(numeric_value)
+		
+		console && console.log('OUT:(' + numeric_value + '|' + character + ')')
+		
+		STDOUT.push(character)
 	},
 	
 	add : function(stack) {

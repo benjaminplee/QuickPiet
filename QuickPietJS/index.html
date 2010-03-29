@@ -43,7 +43,7 @@ out
 			<textarea id="stack" cols="10" rows="40" ></textarea>
 		</div>
 		<div style="float:left;">
-			<input type="button" value="Run" id="run" onclick="QuickPietJS.Run($('#commands'),$('#input'),$('#output'))"/>
+			<input type="button" value="Run" id="run" onclick="console.log('STARTING!');$('#output').val('');QuickPietJS.Run($('#commands'),$('#input'),$('#output'))"/>
 		</div>
 	</body>
 </html>

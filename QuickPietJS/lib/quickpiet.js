@@ -13,7 +13,7 @@ QuickPietJS.Run = function(command_textarea, stdin_textarea, stdout_textarea) {
 		proc.Executor(proc.BindCommandArguments(Commands, stack, stdin, stdout), split_commands, proc.BuildLabelMap(split_commands))
 	}
 	catch(e) {
-		alert(e)	
+		alert(e)
 	}
 }
 
@@ -25,9 +25,10 @@ QuickPietJS.stdio.textarea = function(element) {
 
 QuickPietJS.stdio.textarea.prototype.pop = function() {
 	var buffer = this.element.val()
-	
+
+	// untested	
 	if(buffer.length == 0) {
-		throw new EvalError('Can not pop from empty buffer')	
+		buffer = prompt('Your program requests additional input data.  Please type in more data below').replace(/\\n/, String.fromCharCode(10))
 	}
 	
 	this.element.val(buffer.substring(1))
@@ -113,8 +114,13 @@ QuickPietJS.CommandProcessor.prototype.Executor = function(commands, split_comma
 	
 	while(command_index >= 0 && command_index < num_commands) {
 		var current_split_command = split_commands[command_index]
-		var command_result = commands[current_split_command[0]](current_split_command[1])
-		
+		try {
+			var command_result = commands[current_split_command[0]](current_split_command[1])
+		}
+		catch(e) {
+			alert(command_index + '::' + e + '::[' + current_split_command + ']')
+			throw new Error('Error while running program, exiting.')
+		}
 		command_index = command_result && label_map[command_result] || (command_index + 1)
 	}
 }

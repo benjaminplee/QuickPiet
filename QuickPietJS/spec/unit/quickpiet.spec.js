@@ -184,10 +184,8 @@ describe 'QuickPietJS'
 	  	  	io_buffer.val().should.eql 'og'
 	  	  end
 	  	  
-	  	  it 'should error if the buffer is empty'
-	  	    io_buffer.val('')
-	  	    
-	  	    -{ textarea.pop() }.should.throw_error EvalError, 'Can not pop from empty buffer'
+	  	  it 'should prompt for additional input if nothing in buffer'
+	  	  	'this feature'.should.be 'done'
 	  	  end
 	  	end
 	  	
