@@ -159,12 +159,19 @@ describe 'Commands'
 		end
 		
 		it 'should error if invalid arguments are given (e.g. missing, commas, too many, letters, and decimals)'
-		  -{ Commands['roll'](stack, '') }.should.throw_error SyntaxError, 'Invalid argument(s)'
-		  -{ Commands['roll'](stack, ' ') }.should.throw_error SyntaxError, 'Invalid argument(s)'
 		  -{ Commands['roll'](stack, '1, 1') }.should.throw_error SyntaxError, 'Invalid argument(s)'
 		  -{ Commands['roll'](stack, '1 1 3') }.should.throw_error SyntaxError, 'Invalid argument(s)'
 		  -{ Commands['roll'](stack, '1 a') }.should.throw_error SyntaxError, 'Invalid argument(s)'
 		  -{ Commands['roll'](stack, '1 2.5') }.should.throw_error SyntaxError, 'Invalid argument(s)'
+		end
+		
+		it 'should use top two values if no arguments are given'
+		  stack.push(4)
+		  stack.push(2)
+		  
+		  Commands['roll'](stack, '')
+		  
+		  stack.should.eql [1, 4, 5, 2, 3]
 		end
 		
 		it 'should return undefined'

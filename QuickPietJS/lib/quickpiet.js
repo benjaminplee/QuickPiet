@@ -100,6 +100,22 @@ QuickPietJS.CommandProcessor.prototype.BindCommandArguments = function(commands,
 	jQuery.each(commands, function(command_name, command_function) {
 		if(command_name[0] != '_') {
 			bound_commands[command_name] = function(args) {
+				if(console) {
+					var info = '[' + command_name + '|' + args + ':'
+					
+					for(var i = 0; i < stack.length; i++) {
+						info = info + stack[i]
+						
+						if((i+1) < stack.length) {
+							info = info + ','	
+						}
+					}
+					
+					info = info + ']'
+					
+					console.log(info)
+				}
+		
 				return command_function(stack, args, STDIN, STDOUT)	
 			}
 		}	

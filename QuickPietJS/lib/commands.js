@@ -43,6 +43,13 @@ Commands = {
 	roll : function(stack, args) {
 		args = jQuery.trim(args)
 		
+		if(!args || args.length == 0) {
+			Commands._enforce_min_stack_size(stack, 2)
+			var t1 = stack.pop()
+			var t2 = stack.pop()
+			args = ('' + t2 + ' ' + t1)
+		}
+		
 		if(!args || args.match(/[^0-9\-\s]/)) {
 			throw new SyntaxError('Invalid argument(s)')
 		}
@@ -95,7 +102,7 @@ Commands = {
 		var numeric_value = stack.pop()
 		
 		if(numeric_value < 1) {
-			throw new EvalError('Can not output negative values')
+			throw new EvalError('Can not output negative values (' + numeric_value + ')')
 		}
 		
 		var character = String.fromCharCode(numeric_value)

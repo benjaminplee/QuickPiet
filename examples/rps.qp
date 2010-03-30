@@ -20,21 +20,52 @@ out
 out
 
 # **** push delimeter ****
-push 1 2
+push 1 11
 subtract
 
-# **** Input player 1 name until new line ****
+# **** push word count ****
+push 1
+push 1
+subtract
+
+# **** Input player 1 name until new line and reverse ****
 :p1inputname
+push 1
+add
 in
 duplicate
+roll 3 1
 push 10
 subtract
 not
 not
 goto p1inputname IGNORE
+push 1
+subtract
+roll 2 1
 pop
 
-# **** reverse the name ****
+# **** reverse player 1 name so that it can later be printed
+:reverseplayer1name
+duplicate
+push 1
+subtract
+not
+goto donereverseplayer1name NOWHERE
+duplicate
+push 1
+subtract
+push 3
+push 1
+roll
+push 1
+add
+push 1
+roll
+push 1
+goto reverseplayer1name NOWHERE
+:donereverseplayer1name
+pop
 
 # **** Player 2 Name: ****
 push 32 58 101 109 97 78 32 40 32 114 101 121 97 108 80
@@ -54,22 +85,53 @@ out
 out
 out
 
-# **** insert delimeter ****
-push 1 2
+# **** push delimeter ****
+push 1 11
 subtract
 
-# **** Input player 2 name until new line ****
+# **** push word count ****
+push 1
+push 1
+subtract
+
+# **** Input player 2 name until new line and reverse ****
 :p2inputname
+push 1
+add
 in
 duplicate
+roll 3 1
 push 10
 subtract
 not
 not
 goto p2inputname IGNORE
+push 1
+subtract
+roll 2 1
 pop
 
-# **** reverse name ****
+# **** reverse player 2 name so that it can later be printed
+:reverseplayer2name
+duplicate
+push 1
+subtract
+not
+goto donereverseplayer2name NOWHERE
+duplicate
+push 1
+subtract
+push 3
+push 1
+roll
+push 1
+add
+push 1
+roll
+push 1
+goto reverseplayer2name NOWHERE
+:donereverseplayer2name
+pop
 
 # **** [R]ock, [P]aper, or [S]cissors? for player 1 ****
 push 32 63 115 114 111 115 115 105 99 93 83 91 32 114 111 32 44 114 101 112 97 93 80 91 32 44 107 99 111 93 82 91
@@ -222,20 +284,50 @@ end
 
 :winplayer2
 pop
-push 33 115 110 105 87 32 50
+:trytoprintplayer2name
+duplicate
+push 1
+push 11
+subtract
+subtract
+not
+goto finalprint NOWHERE
 out
-out
-out
-out
-out
-out
-out
-end
+push 1
+goto trytoprintplayer2name NOWHERE
 
 :winplayer1
 pop
-push 33 115 110 105 87 32 49
+:ignoreplayer2name
+duplicate
+push 1
+push 11
+subtract
+subtract
+not
+goto printplayer1name NOWHERE
+pop
+push 1
+goto ignoreplayer2name NOWHERE
+:printplayer1name
+pop
+:trytoprintplayer1name
+duplicate
+push 1
+push 11
+subtract
+subtract
+not
+goto finalprint NOWHERE
 out
+push 1
+goto trytoprintplayer1name NOWHERE
+
+
+
+
+:finalprint
+push 33 115 110 105 87 32
 out
 out
 out
