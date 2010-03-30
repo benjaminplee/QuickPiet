@@ -323,9 +323,6 @@ out
 push 1
 goto trytoprintplayer1name NOWHERE
 
-
-
-
 :finalprint
 push 33 115 110 105 87 32
 out
